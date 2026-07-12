@@ -2,7 +2,7 @@
 
 # udhcpc script edited by Tim Riker <Tim@Rikers.org>
 
-# Changes by OpenIPC 2021
+# Changes by DarkOS 2021
 #
 # - move resolv.conf path to /tmp
 # - remove interface notes from resolv.conf
