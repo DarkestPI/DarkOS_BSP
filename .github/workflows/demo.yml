@@ -1,0 +1,46 @@
+# 工作流名字 — 在 GitHub Actions 页面上显示
+name: 演示-编译并打包 update.img
+
+# 什么时候跑？ — 手动在网页上点按钮才跑
+on:
+  workflow_dispatch:
+
+# 要做什么？
+jobs:
+
+  # 第一个也是唯一一个任务：编译 + 打包
+  build:
+    name: 编译 rv1126_mini
+    runs-on: ubuntu-latest        # 在 GitHub 提供的 Ubuntu 虚拟机里跑
+
+    steps:
+
+      # 步骤1: 把代码拉到虚拟机里
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      # 步骤2: 安装依赖（只需要第一次）
+      - name: 安装依赖
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq wget file sed make libncurses-dev \
+            cpio rsync unzip bc gcc g++ perl bison flex lzop
+
+      # 步骤3: 编译
+      - name: 编译 Buildroot
+        run: |
+          make deps       # 装构建依赖
+          make BOARD=rv1126_mini
+
+      # 步骤4: 打包 update.img
+      - name: 打包 update.img
+        run: |
+          cd update-img
+          bash mk-update.sh
+
+      # 步骤5: 上传 update.img 作为产物
+      - name: 上传 update.img
+        uses: actions/upload-artifact@v4
+        with:
+          name: update-img
+          path: update-img/update.img
