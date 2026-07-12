@@ -18,7 +18,7 @@ cp $SCRIPT_DIR/uboot.img    $WORK_DIR/
 cp $SCRIPT_DIR/boot.img     $WORK_DIR/
 
 # 3. 从 Buildroot 拿最新的 rootfs
-cp $BUILDROOT_IMAGES/rootfs.ubi.rv1126b $WORK_DIR/rootfs.img
+cp $BUILDROOT_IMAGES/rootfs.ubi.rv1126 $WORK_DIR/rootfs.img
 
 # 4. 使用 SDK 打包脚本生成 update.img
 echo "=== Packaging update.img ==="
