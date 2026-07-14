@@ -23,7 +23,7 @@ DarkOS 的板级支持包（BSP），基于 [Buildroot](https://buildroot.org/) 
 
 ### 环境要求
 
-- Linux 构建主机（推荐 Ubuntu 20.04+）
+- Linux 构建主机（推荐 Ubuntu 22.04+）
 - 基本构建工具链：`wget`, `make`, `gcc`, `g++`, `perl`, `bison`, `flex` 等
 
 ### 安装依赖
