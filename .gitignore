@@ -5,3 +5,9 @@ buildroot-*
 
 br-ext-chip-rockchip/board/rv1126b_zs_im06a/prebuilt
 br-ext-chip-rockchip/board/rv1126b_zs_im06a/overlay
+rockchip-tools/update-img/Image
+rockchip-tools/update-img/update.img
+rockchip-tools/update-img/oem.img
+rockchip-tools/update-img/userdata.img
+rockchip-tools/update-img/env.img
+rockchip-tools/update-img/package-file
