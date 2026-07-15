@@ -2,3 +2,6 @@ buildroot-*/
 output/
 buildroot-*
 .DS_Store
+
+br-ext-chip-rockchip/board/rv1126b_zs_im06a/prebuilt
+br-ext-chip-rockchip/board/rv1126b_zs_im06a/overlay

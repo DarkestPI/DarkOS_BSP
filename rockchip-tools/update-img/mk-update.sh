@@ -13,6 +13,7 @@ PEB_SIZE=0x20000      # 128 KiB 物理擦除块
 MIN_IO=0x800          # 2 KiB 最小 I/O
 SUB_SIZE=2048         # 子页大小
 LEB_SIZE=0x1f000      # 124 KiB 逻辑擦除块
+BOARD_PREBUILT="$PROJECT_TOP/br-ext-chip-rockchip/board/rv1126b_zs_im06a/prebuilt"
 
 # 1. 准备 Image 目录
 rm -rf $WORK_DIR
@@ -32,7 +33,9 @@ echo "=== Creating UBI images ==="
 TMP_EMPTY=$(mktemp -d)
 
 # zs_sys_file_a (48 MiB, 384 PEBs)
-$HOST_BIN/mkfs.ubifs -d $TMP_EMPTY -e $LEB_SIZE -c 376 -m $MIN_IO -x lzo -F -o /tmp/zs_sys_file_a.ubifs
+ZSA_SRC=$TMP_EMPTY
+[ -d $BOARD_PREBUILT/zs_sys_file_a ] && [ "$(ls -A $BOARD_PREBUILT/zs_sys_file_a)" ] && ZSA_SRC=$BOARD_PREBUILT/zs_sys_file_a
+$HOST_BIN/mkfs.ubifs -d $ZSA_SRC -e $LEB_SIZE -c 376 -m $MIN_IO -x lzo -F -o /tmp/zs_sys_file_a.ubifs
 cat > $TMP_EMPTY/ubinize_sys.cfg << EOFCFG
 [zs_sys_file_a]
 mode=ubi
@@ -47,7 +50,9 @@ $HOST_BIN/ubinize -o $WORK_DIR/zs_sys_file_a.img -p $PEB_SIZE -m $MIN_IO -s $SUB
 echo "  zs_sys_file_a.img done"
 
 # zs_sys_file_b (48 MiB, 384 PEBs)
-$HOST_BIN/mkfs.ubifs -d $TMP_EMPTY -e $LEB_SIZE -c 376 -m $MIN_IO -x lzo -F -o /tmp/zs_sys_file_b.ubifs
+ZSB_SRC=$TMP_EMPTY
+[ -d $BOARD_PREBUILT/zs_sys_file_b ] && [ "$(ls -A $BOARD_PREBUILT/zs_sys_file_b)" ] && ZSB_SRC=$BOARD_PREBUILT/zs_sys_file_b
+$HOST_BIN/mkfs.ubifs -d $ZSB_SRC -e $LEB_SIZE -c 376 -m $MIN_IO -x lzo -F -o /tmp/zs_sys_file_b.ubifs
 cat > $TMP_EMPTY/ubinize_sys.cfg << EOFCFG
 [zs_sys_file_b]
 mode=ubi
@@ -61,9 +66,11 @@ EOFCFG
 $HOST_BIN/ubinize -o $WORK_DIR/zs_sys_file_b.img -p $PEB_SIZE -m $MIN_IO -s $SUB_SIZE $TMP_EMPTY/ubinize_sys.cfg
 echo "  zs_sys_file_b.img done"
 
-# oem (默认空，如有预置内容放 $SCRIPT_DIR/oem_overlay/)
+# oem (默认空，优先用 board prebuilt，其次 update-img/oem_overlay/)
 OEM_SRC=$TMP_EMPTY
-if [ -d $SCRIPT_DIR/oem_overlay ]; then
+if [ -d $BOARD_PREBUILT/oem ] && [ "$(ls -A $BOARD_PREBUILT/oem)" ]; then
+    OEM_SRC=$BOARD_PREBUILT/oem
+elif [ -d $SCRIPT_DIR/oem_overlay ]; then
     OEM_SRC=$SCRIPT_DIR/oem_overlay
 fi
 $HOST_BIN/mkfs.ubifs -d $OEM_SRC -e $LEB_SIZE -c 2400 -m $MIN_IO -x lzo -F -o /tmp/oem.ubifs
