@@ -1,19 +1,18 @@
 # ========================== 架构配置 ==========================
-BR2_arm=y
-BR2_cortex_a7=y
-BR2_ARM_FPU_NEON_VFPV4=y
+BR2_aarch64=y
+BR2_cortex_a53=y
 
 # ========================== 工具链配置 ==========================
 BR2_TOOLCHAIN_EXTERNAL=y
 BR2_TOOLCHAIN_EXTERNAL_CUSTOM=y
-BR2_TOOLCHAIN_EXTERNAL_DOWNLOAD=y
-BR2_TOOLCHAIN_EXTERNAL_URL="https://github.com/openipc/firmware/releases/download/$(OPENIPC_TOOLCHAIN).tgz"
-BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX="arm-openipc-linux-gnueabihf"
-BR2_TOOLCHAIN_EXTERNAL_HEADERS_4_19=y
+BR2_TOOLCHAIN_EXTERNAL_PREINSTALLED=y
+BR2_TOOLCHAIN_EXTERNAL_PATH="/home/nlj/workspace1/P005_RV1126BP_ZS/rv1126b_v120/buildroot/output/rockchip_rv1126b_zs_v1/rockchip_rv1126b_zs_v1/host"
+BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX="aarch64-buildroot-linux-gnu"
+BR2_TOOLCHAIN_EXTERNAL_HEADERS_6_1=y
 BR2_TOOLCHAIN_EXTERNAL_CUSTOM_GLIBC=y
 # BR2_TOOLCHAIN_EXTERNAL_INET_RPC is not set
 BR2_TOOLCHAIN_EXTERNAL_CXX=y
-BR2_TOOLCHAIN_EXTERNAL_OPENMP=y
+# BR2_TOOLCHAIN_EXTERNAL_OPENMP is not set
 
 # # ========================== Linux 内核配置 ==========================
 # BR2_LINUX_KERNEL=y
@@ -27,7 +26,9 @@ BR2_TOOLCHAIN_EXTERNAL_OPENMP=y
 # BR2_LINUX_KERNEL_IMAGE_NAME="zboot.img"
 
 # ========================== 文件系统与基础包 ==========================
+BR2_TARGET_GENERIC_HOSTNAME="zs"
 BR2_TARGET_GENERIC_ISSUE="Welcome to ZS"
+BR2_TARGET_GENERIC_ROOT_PASSWD="1"
 BR2_PACKAGE_BUSYBOX_CONFIG="$(BR2_EXTERNAL)/package/busybox/busybox.config"
 BR2_PACKAGE_MTD=y
 BR2_PACKAGE_UBOOT_TOOLS=y
