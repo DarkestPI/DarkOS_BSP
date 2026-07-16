@@ -99,10 +99,3 @@ DarkOS_BSP/
 基于 OpenIPC 项目，遵循相关开源协议。
 
 ## 贡献者
-
-- [@cronyx](https://github.com/cronyx)
-- [@FlyRouter](https://github.com/FlyRouter)
-- [@viktorxda](https://github.com/viktorxda)
-- [@p0i5k](https://github.com/p0i5k)
-- [@ystinia](https://github.com/ystinia)
-- [@ZigFisher](https://github.com/ZigFisher)
