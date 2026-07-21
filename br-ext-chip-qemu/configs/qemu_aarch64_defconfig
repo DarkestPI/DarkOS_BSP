@@ -1,0 +1,43 @@
+# ========================== 架构配置 ==========================
+BR2_aarch64=y
+BR2_cortex_a53=y
+
+# ========================== 工具链配置 ==========================
+# QEMU 模拟平台使用 Buildroot 内置工具链，不依赖厂商外部工具链
+BR2_TOOLCHAIN_BUILDROOT=y
+BR2_TOOLCHAIN_BUILDROOT_GLIBC=y
+BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_6_1=y
+BR2_TOOLCHAIN_BUILDROOT_CXX=y
+
+# ========================== Linux 内核配置 ==========================
+# 使用主线内核 + QEMU virt 最小化配置（版本与 Buildroot 2024.02.10 测试组合一致）
+BR2_LINUX_KERNEL=y
+BR2_LINUX_KERNEL_CUSTOM_VERSION=y
+BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="6.1.44"
+BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
+BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="$(EXTERNAL_VENDOR)/board/qemu-aarch64/linux.config"
+BR2_LINUX_KERNEL_NEEDS_HOST_OPENSSL=y
+
+# ========================== 补丁与覆盖层 ==========================
+# all-patches 中的 linux 补丁仅适用于厂商旧内核（如 4.19），无法应用于主线内核，
+# QEMU 平台改用不含 linux/gcc 补丁的 all-patches-neo
+BR2_GLOBAL_PATCH_DIR="$(BR2_EXTERNAL)/package/all-patches-neo"
+
+# ========================== 文件系统与基础包 ==========================
+BR2_PACKAGE_BUSYBOX_CONFIG="$(BR2_EXTERNAL)/package/busybox/busybox.config"
+BR2_PACKAGE_ZLIB=y
+# BR2_PACKAGE_IFUPDOWN_SCRIPTS is not set
+BR2_TARGET_ROOTFS_EXT2=y
+BR2_TARGET_ROOTFS_EXT2_4=y
+BR2_TARGET_ROOTFS_EXT2_SIZE="128M"
+# BR2_TARGET_ROOTFS_TAR is not set
+
+# ========================== 平台配置 ==========================
+BR2_OPENIPC_SOC_VENDOR="qemu"
+BR2_OPENIPC_SOC_MODEL="qemu-aarch64"
+BR2_OPENIPC_SOC_FAMILY="qemu"
+BR2_OPENIPC_VARIANT="lite"
+BR2_OPENIPC_FLASH_SIZE="0"
+
+# ========================== 额外软件包 ==========================
+BR2_PACKAGE_DROPBEAR_OPENIPC=y

@@ -19,6 +19,11 @@ DarkOS 的板级支持包（BSP），基于 [Buildroot](https://buildroot.org/) 
 | rv1126   | `rv1126_lite`, `rv1126_mini`                                         |
 | rv1126b  | `rv1126b_mini`                                                       |
 
+### QEMU 模拟平台
+| 机器类型                    | 配置           |
+|-----------------------------|----------------|
+| virt (aarch64, Cortex-A53)  | `qemu_aarch64` |
+
 ## 快速开始
 
 ### 环境要求
@@ -68,6 +73,9 @@ DarkOS_BSP/
 │   └── configs/             #   Buildroot defconfig
 ├── br-ext-chip-rockchip/    # 瑞芯微平台板卡配置
 │   ├── board/               #   板级配置文件
+│   └── configs/             #   Buildroot defconfig
+├── br-ext-chip-qemu/        # QEMU 模拟平台配置
+│   ├── board/               #   内核配置、QEMU 启动脚本
 │   └── configs/             #   Buildroot defconfig
 ├── general/                 # 通用 Buildroot external tree
 │   ├── overlay/             #   根文件系统覆盖层（init 脚本、网络配置等）
